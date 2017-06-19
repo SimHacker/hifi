@@ -1,0 +1,266 @@
+<!--
+//  TextPage.html
+//
+//  Created by Faye Li on 3 Feb 2017
+//  Modified by Don Hopkins (dhopkins@donhopkins.com).
+//  Copyright 2017 High Fidelity, Inc.
+//
+//  Distributed under the Apache License, Version 2.0.
+//  See the accompanying file LICENSE or http://www.apache.org/licenses/LICENSE-2.0.html
+-->
+<html>
+    <head>
+        <title>Text</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600,700"" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <style>
+            input[type=button],
+            button {
+                font-family: 'Raleway';
+                font-weight: bold;
+                font-size: 20px;
+                vertical-align: top;
+                width: 100%;
+                height: 40px;
+                min-width: 120px;
+                padding: 0px 18px;
+                margin-top: 5px;
+                margin-right: 6px;
+                border-radius: 5px;
+                border: none;
+                color: #fff;
+                background-color: #000;
+                background: linear-gradient(#343434 20%, #000 100%);
+                cursor: pointer;
+            }
+
+            .commandButton {
+                width: 100px !important;
+            }
+
+            input[type=text] {
+                font-family: 'Raleway';
+                font-weight: bold;
+                font-size: 20px;
+                vertical-align: top;
+                height: 40px;
+                color: #000;
+                width: 100%;
+                background-color: #fff;
+                background: linear-gradient(#343434 20%, #fff 100%);
+            }
+
+            input[type=button].red {
+                color: #fff;
+                background-color: #94132e;
+                background: linear-gradient(#d42043 20%, #94132e 100%);
+            }
+            input[type=button].blue {
+                color: #fff;
+                background-color: #1080b8;
+                background: linear-gradient(#00b4ef 20%, #1080b8 100%);
+            }
+            input[type=button].white {
+                color: #121212;
+                background-color: #afafaf;
+                background: linear-gradient(#fff 20%, #afafaf 100%);
+            }
+
+            input[type=button]:enabled:hover {
+                background: linear-gradient(#000, #000);
+                border: none;
+            }
+            input[type=button].red:enabled:hover {
+                background: linear-gradient(#d42043, #d42043);
+                border: none;
+            }
+            input[type=button].blue:enabled:hover {
+                background: linear-gradient(#00b4ef, #00b4ef);
+                border: none;
+            }
+            input[type=button].white:enabled:hover {
+                background: linear-gradient(#fff, #fff);
+                border: none;
+            }
+
+            input[type=button]:active {
+                background: linear-gradient(#343434, #343434);
+            }
+            input[type=button].red:active {
+                background: linear-gradient(#94132e, #94132e);
+            }
+            input[type=button].blue:active {
+                background: linear-gradient(#1080b8, #1080b8);
+            }
+            input[type=button].white:active {
+                background: linear-gradient(#afafaf, #afafaf);
+            }
+
+            input[type=button]:disabled {
+                color: #252525;
+                background: linear-gradient(#575757 20%, #252525 100%);
+            }
+
+            input[type=button][pressed=pressed] {
+                color: #00b4ef;
+            }
+
+            body {
+                width: 100%;
+                overflow-x: hidden;
+                overflow-y: hidden;
+                margin: 0;
+                font-family: 'Raleway', sans-serif;
+                color: white;
+                background: linear-gradient(#2b2b2b, #0f212e);
+            }
+
+            .Content {
+                font-size: 20px;
+                width: 100%;
+                height: 100%; 
+                display: flex; 
+                flex-direction: column;
+            }
+
+            .TopBar {
+                height: 40px;
+                background: linear-gradient(#2b2b2b, #1e1e1e);
+                font-weight: bold;
+                padding: 10px 10px 10px 10px;
+                display: flex;
+                align-items: center;
+                width: 100%;
+                font-size: 28px;
+                flex-grow: 0;
+            }
+
+        </style>
+    </head>
+    <body>
+
+        <div class="Content">
+
+            <div class="TopBar">
+                <b>Text</b>
+            </div>
+
+            <div>
+                Type:
+                <select id="Type" onchange="changeType(this.value);">
+                    <option value="TextEntity">Text Entity</option>
+                    <option value="Text3dOverlay">Text3d Overlay</option>
+                    <option value="TextOverlay">Text Overlay</option>
+                </select>
+                <br/>
+                Text:
+                <br/>
+                <textarea id="TextEditor" style="width: 100%; height: 200px" onchange="changeText(this.value);" onkeyup="changeText(this.value);">This is some text.</textarea>
+                <br/>
+                Dimensions:
+                X: <input id="DimensionX" type="text" value="0.1" style="width: 100px;" onchange="changeDimensionX(this.value);"/>
+                Y: <input id="DimensionY" type="text" value="0.1" style="width: 100px;" onchange="changeDimensionY(this.value);"/>
+                Z: <input id="DimensionZ" type="text" value="0.1" style="width: 100px;" onchange="changeDimensionZ(this.value);"/>
+                <br/>
+                Margins:
+                Top: <input id="MarginTop" type="text" value="0.1" style="width: 100px;" onchange="changeMarginTop(this.value);"/>
+                Bottom: <input id="MarginBottom" type="text" value="0.1" style="width: 100px;" onchange="changeMarginBottom(this.value);"/>
+                Left: <input id="MarginLeft" type="text" value="0.1" style="width: 100px;" onchange="changeMarginLeft(this.value);"/>
+                Right: <input id="MarginRight" type="text" value="0.1" style="width: 100px;" onchange="changeMarginRight(this.value);"/>
+            </div>
+        </div>
+
+    </body>
+
+    <script>
+
+        //console.log("TextPage: loading script...");
+
+        // Tell the interface script we have initialized.
+        function emitEvent(event) {
+            EventBridge.emitWebEvent(JSON.stringify(event));
+        }
+
+        function emitReadyEvent() {
+            emitEvent({
+                type: "Ready"
+            });
+        }
+
+        function changeType(value) {
+            console.log("changeType", value);
+        }
+
+        function changeText(value) {
+            console.log("changeText", value);
+        }
+
+        function changeDimensionX(value) {
+            console.log("changeDimensionX", value);
+        }
+
+        function changeDimensionY(value) {
+            console.log("changeDimensionY", value);
+        }
+
+        function changeDimensionZ(value) {
+            console.log("changeDimensionZ", value);
+        }
+
+        function changeMarginTop(value) {
+            console.log("changeMarginTop", value);
+        }
+
+        function changeMarginBottom(value) {
+            console.log("changeMarginBottom", value);
+        }
+
+        function changeMarginLeft(value) {
+            console.log("changeMarginLeft", value);
+        }
+
+        function changeMarginRight(value) {
+            console.log("changeMarginRight", value);
+        }
+
+        function handleUpdate() {
+            console.log("handleUpdate");
+        }
+
+        // Let's get this show on the road!
+        function main() {
+
+            //console.log("TextPage: main");
+
+            // Hook up a handler for events that come from hifi.
+            EventBridge.scriptEventReceived.connect(function (message) {
+
+                //console.log("TextPage: main: scriptEventReceived", message);
+
+                var messageData = JSON.parse(message);
+                var messageType = messageData['type'];
+
+                switch (messageType) {
+
+                    case "Update":
+                        handleUpdate();
+                        break;
+
+                    default:
+                        console.log("WEB: received unexpected script event message: " + message);
+                        break;
+
+                }
+            });
+
+            emitReadyEvent();
+        }
+
+        // Start up once the document is loaded.
+        $(document).ready(main);
+
+    </script>
+
+</html>
